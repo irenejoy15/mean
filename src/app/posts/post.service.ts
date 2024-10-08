@@ -25,6 +25,7 @@ export class PostsService{
 
     addPost(title:string, content:string){
         // http://localhost:82/mean-backend/public/api/posts
+        // http://localhost:3000/api/posts
         const post: Post = {id:null,title: title, content: content};
         this.http
         .post<{message: string}>('http://localhost:3000/api/posts',post)
