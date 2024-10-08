@@ -3,6 +3,10 @@
 // npm install --save-dev nodemon
 // npm run start:server
 // npm install --save body-parser
+// setup mongodb new cluster new user and whitelist 
+// PjoqgjL563lZsaAd itbevmiprinter
+// https://www.mongodb.com/cloud/atlas
+// npm install mongoose --save
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
