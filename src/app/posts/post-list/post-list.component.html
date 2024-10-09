@@ -1,3 +1,28 @@
+<mat-card>
+    <form (submit)="onSearch(searchForm)" #searchForm="ngForm">
+        <mat-form-field>
+            <input 
+                matInput rows="6"
+                name="title_search" 
+                ngModel
+                required
+                minlength="3"
+                #title_search="ngModel"
+                placeholder=""
+            />
+            <mat-error *ngIf="title_search.invalid">PLEASE ENTER A POST TITLE</mat-error>
+        </mat-form-field>
+        <button 
+            mat-raised-button
+            color="primary" 
+            type ="submit"
+        >
+            SEARCH
+        </button>
+    </form>
+    
+</mat-card>
+
 <mat-accordion multi="true" *ngIf="posts.length > 0">
     <mat-expansion-panel *ngFor="let post of posts">
         <mat-expansion-panel-header >

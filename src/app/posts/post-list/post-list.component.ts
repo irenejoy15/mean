@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core'
 import { Subscription } from 'rxjs';
 import {Post} from '../post.model';
 import { PostsService } from '../post.service';
+import { NgForm } from '@angular/forms';
 // DECORATOR
 @Component({
     selector: 'app-post-list',
@@ -33,5 +34,9 @@ export class PostListComponent implements OnInit, OnDestroy{
 
    onDelete(postId:string){
     this.postsService.deletePost(postId);
+   }
+
+   onSearch(form:NgForm){
+    this.postsService.onSearch(form.value.title_search);
    }
 }

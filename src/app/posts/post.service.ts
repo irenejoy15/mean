@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators'
 export class PostsService{
     private posts: Post[] = [];
     private postsUpdated = new Subject<Post[]>(); 
-
+    
     constructor(private http: HttpClient){}
 
     getPosts(){
@@ -33,6 +33,23 @@ export class PostsService{
                     title: post.title,
                     content: post.content,
                     id: post._id
+                };
+            });
+        }))
+        .subscribe((transformedPosts)=>{
+            this.posts = transformedPosts;
+            this.postsUpdated.next([...this.posts])
+        });
+    }
+     
+    onSearch(title_search:string){
+        this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts/search?title='+title_search)
+        .pipe(map((postData)=>{
+            return postData.posts.map(post=>{
+                return{
+                    title: post.title,
+                    content: post.content,
+                    id: post.id
                 };
             });
         }))
