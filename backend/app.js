@@ -40,22 +40,15 @@ app.post("/api/posts",(req,res,next)=>{
 });
 
 app.get('/api/posts',(req,res,next)=>{
-    const posts = [
-        {
-            id:'1',
-            title:'irene1',
-            content:'irene1'
-        },
-        {
-            id:'2',
-            title:'irene2',
-            content:'irene2'
-        },
-    ];
-    res.status(200).json({
-        message: 'Post fecthed sucessfully',
-        posts: posts
-    });
+    Post.find()
+        .then(documents => {
+            res.status(200).json({
+                message: 'Post fecthed sucessfully',
+                posts: documents
+            });
+        });
+    ;
+    
 });
 
 module.exports = app;
