@@ -1,0 +1,17 @@
+ul{
+    list-style: none;       
+    padding: 0;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.spacer{
+    flex: 1 1 auto;
+}
+
+mat-card { padding: 30px; }
+app-header a { color: white !important }
+a.mat-accent { color: #ff4081 !important }
+.mat-mdc-text-field-wrapper { background-color: transparent !important }
