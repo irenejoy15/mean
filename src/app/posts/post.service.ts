@@ -63,6 +63,10 @@ export class PostsService{
         return this.postsUpdated.asObservable();
     }
 
+    getPost(id:string){
+        return {...this.posts.find(p => p.id === id)}
+    }
+
     addPost(title:string, content:string){
         // http://localhost:82/mean-backend/public/api/posts
         // http://localhost:3000/api/posts
