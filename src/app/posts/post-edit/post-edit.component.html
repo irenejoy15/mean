@@ -1,5 +1,5 @@
 <mat-card>
-    <form >
+    <form  (submit)="onUpdate(updateForm)" #updateForm="ngForm">
         <mat-form-field *ngIf="post">
             <input 
                 matInput rows="6"

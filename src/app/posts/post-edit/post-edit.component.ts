@@ -26,4 +26,9 @@ export class PostEditComponent implements OnInit{
         });
     }
 
+    onUpdate(form:NgForm){
+        this.postsService.updatePost(this.postId,form.value.title,form.value.content);
+        form.resetForm();
+    }
+
 }

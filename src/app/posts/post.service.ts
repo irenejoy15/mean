@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import {Post} from './post.model'
 import {map} from 'rxjs/operators'
+import { response } from 'express';
 
 @Injectable({providedIn: 'root'})
 export class PostsService{
@@ -13,27 +14,13 @@ export class PostsService{
     constructor(private http: HttpClient){}
     
     getPosts(){
-        // this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
-        // .pipe(map((postData)=>{
-        //     return postData.posts.map(post=>{
-        //         return{
-        //             title: post.title,
-        //             content: post.content,
-        //             id: post.id
-        //         };
-        //     });
-        // }))
-        // .subscribe((transformedPosts)=>{
-        //     this.posts = transformedPosts;
-        //     this.postsUpdated.next([...this.posts])
-        // });
-        this.http.get<{message: string, posts:any[]}>('http://localhost:3000/api/posts')
+        this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
         .pipe(map((postData)=>{
             return postData.posts.map(post=>{
                 return{
                     title: post.title,
                     content: post.content,
-                    id: post._id
+                    id: post.id
                 };
             });
         }))
@@ -41,6 +28,20 @@ export class PostsService{
             this.posts = transformedPosts;
             this.postsUpdated.next([...this.posts])
         });
+        // this.http.get<{message: string, posts:any[]}>('http://localhost:3000/api/posts')
+        // .pipe(map((postData)=>{
+        //     return postData.posts.map(post=>{
+        //         return{
+        //             title: post.title,
+        //             content: post.content,
+        //             id: post._id
+        //         };
+        //     });
+        // }))
+        // .subscribe((transformedPosts)=>{
+        //     this.posts = transformedPosts;
+        //     this.postsUpdated.next([...this.posts])
+        // });
     }
      
     onSearch(title_search:string){
@@ -92,9 +93,21 @@ export class PostsService{
         });
     }
 
+    updatePost(id: string, title: string, content:string){
+        const post: Post = {
+            id:id,
+            title:title,
+            content:content
+        };
+        //  http://localhost:3000/api/post/
+        //  http://localhost:82/mean-backend/public/api/posts/
+        this.http.put("http://localhost:82/mean-backend/public/api/posts/" + id, post)
+        .subscribe(response=>console.log(response));
+    }
+
     deletePost(postId: string){
-        // // http://localhost:82/mean-backend/public/api/posts
-        // http://localhost:3000/api/posts
+        // // http://localhost:82/mean-backend/public/api/posts/
+        // http://localhost:3000/api/posts/
         this.http.delete("http://localhost:3000/api/posts/" + postId)
         .subscribe(() => {
             const updatedPosts = this.posts.filter(post => post.id !== postId);
