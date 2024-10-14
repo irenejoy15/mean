@@ -1,6 +1,6 @@
 <mat-card>
-    <form (submit)="onAddPost(postForm)" #postForm="ngForm">
-        <mat-form-field>
+    <form >
+        <mat-form-field *ngIf="post">
             <input 
                 matInput rows="6"
                 name="title" 
@@ -13,7 +13,7 @@
             <mat-error *ngIf="title.invalid">PLEASE ENTER A POST TITLE</mat-error>
         </mat-form-field>
         
-        <mat-form-field>
+        <mat-form-field *ngIf="post">
             <textarea 
                 matInput rows="6" 
                 name="content" 

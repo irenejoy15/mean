@@ -7,10 +7,11 @@ import {map} from 'rxjs/operators'
 @Injectable({providedIn: 'root'})
 export class PostsService{
     private posts: Post[] = [];
+    private postsingle: Post;
     private postsUpdated = new Subject<Post[]>(); 
-    
+    private postTest = new Subject<Post>(); 
     constructor(private http: HttpClient){}
-
+    
     getPosts(){
         // this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
         // .pipe(map((postData)=>{
@@ -63,8 +64,17 @@ export class PostsService{
         return this.postsUpdated.asObservable();
     }
 
-    getPost(id:string){
-        return {...this.posts.find(p => p.id === id)}
+    getPost(id:any){
+        return {...this.posts.find(p => p.id === id)};
+    }
+
+    getPostTest(id:any){
+        return this.http.get("http://localhost:82/mean-backend/public/api/posts/edittest/"+id);
+        
+    }
+
+    getPostEditListener(){
+        return this.postTest.asObservable();
     }
 
     addPost(title:string, content:string){
