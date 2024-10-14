@@ -4,7 +4,7 @@
             <input 
                 matInput rows="6"
                 name="title" 
-                [ngModel]="post.title"
+                [ngModel]="post?.title"
                 required
                 minlength="3"
                 #title="ngModel"
@@ -17,7 +17,7 @@
             <textarea 
                 matInput rows="6" 
                 name="content" 
-                [ngModel]="post.content"
+                [ngModel]="post?.content"
                 required
                 minlength="3"
                 #content="ngModel"

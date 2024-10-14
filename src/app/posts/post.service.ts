@@ -14,27 +14,13 @@ export class PostsService{
     constructor(private http: HttpClient){}
     
     getPosts(){
-        this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
-        .pipe(map((postData)=>{
-            return postData.posts.map(post=>{
-                return{
-                    title: post.title,
-                    content: post.content,
-                    id: post.id
-                };
-            });
-        }))
-        .subscribe((transformedPosts)=>{
-            this.posts = transformedPosts;
-            this.postsUpdated.next([...this.posts])
-        });
-        // this.http.get<{message: string, posts:any[]}>('http://localhost:3000/api/posts')
+        // this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
         // .pipe(map((postData)=>{
         //     return postData.posts.map(post=>{
         //         return{
         //             title: post.title,
         //             content: post.content,
-        //             id: post._id
+        //             id: post.id
         //         };
         //     });
         // }))
@@ -42,6 +28,20 @@ export class PostsService{
         //     this.posts = transformedPosts;
         //     this.postsUpdated.next([...this.posts])
         // });
+        this.http.get<{message: string, posts:any[]}>('http://localhost:3000/api/posts')
+        .pipe(map((postData)=>{
+            return postData.posts.map(post=>{
+                return{
+                    title: post.title,
+                    content: post.content,
+                    id: post._id
+                };
+            });
+        }))
+        .subscribe((transformedPosts)=>{
+            this.posts = transformedPosts;
+            this.postsUpdated.next([...this.posts])
+        });
     }
      
     onSearch(title_search:string){
@@ -66,7 +66,10 @@ export class PostsService{
     }
 
     getPost(id:any){
-        return {...this.posts.find(p => p.id === id)};
+        // http://localhost:82/mean-backend/public/api/posts/edittest/
+        // http://localhost:3000/api/post/
+        // return this.http.get<{id:string,title:string,content:string}>("http://localhost:82/mean-backend/public/api/posts/edittest/" + id);
+        return this.http.get<{_id:string,title:string,content:string}>("http://localhost:3000/api/post/" + id);
     }
 
     getPostTest(id:any){
@@ -101,8 +104,14 @@ export class PostsService{
         };
         //  http://localhost:3000/api/post/
         //  http://localhost:82/mean-backend/public/api/posts/
-        this.http.put("http://localhost:82/mean-backend/public/api/posts/" + id, post)
-        .subscribe(response=>console.log(response));
+        this.http.put("http://localhost:3000/api/post/" + id, post)
+        .subscribe(response=>{
+            const updatedPosts = {...this.posts};
+            const oldPostIndex = updatedPosts.findIndex(p=>p.id === post.id);
+            updatedPosts[oldPostIndex] = post;
+            this.posts = updatedPosts;
+            this.postsUpdated.next([...this.posts]);
+        });
     }
 
     deletePost(postId: string){

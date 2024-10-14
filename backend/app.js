@@ -53,6 +53,16 @@ app.get('/api/posts',(req,res,next)=>{
     
 });
 
+app.get("/api/post/:id",(req,res,next)=>{
+    Post.findById(req.params.id).then(post =>{
+        if(post){
+            res.status(200).json(post);
+        }else{
+            res.status(404).json({message: 'Post Not Found'});
+        }
+    });
+});
+
 app.put("/api/post/:id",(req,res,next)=>{
     const post = new Post({
         _id: req.body.id,
@@ -61,8 +71,7 @@ app.put("/api/post/:id",(req,res,next)=>{
     });
     Post.updateOne({_id:req.params.id},post)
     .then(result=>{
-        console.log(result);
-        res.status(200).json({message: 'Update Successfull'});
+        res.status(200).json({message: 'Update Successfully'});
     });
     ;
 });

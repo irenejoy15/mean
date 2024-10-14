@@ -1,10 +1,10 @@
 <mat-card>
     <form  (submit)="onUpdate(updateForm)" #updateForm="ngForm">
-        <mat-form-field *ngIf="post">
+        <mat-form-field>
             <input 
                 matInput rows="6"
                 name="title" 
-                [ngModel]="post.title"
+                [ngModel]="post?.title"
                 required
                 minlength="3"
                 #title="ngModel"
@@ -13,11 +13,11 @@
             <mat-error *ngIf="title.invalid">PLEASE ENTER A POST TITLE</mat-error>
         </mat-form-field>
         
-        <mat-form-field *ngIf="post">
+        <mat-form-field>
             <textarea 
                 matInput rows="6" 
                 name="content" 
-                [ngModel]="post.content"
+                [ngModel]="post?.content"
                 required
                 minlength="3"
                 #content="ngModel"
