@@ -67,9 +67,9 @@ export class PostsService{
 
     getPost(id:any){
         // http://localhost:82/mean-backend/public/api/posts/edittest/
-        // http://localhost:3000/api/post/
+        // http://localhost:3000/api/posts/
         // return this.http.get<{id:string,title:string,content:string}>("http://localhost:82/mean-backend/public/api/posts/edittest/" + id);
-        return this.http.get<{_id:string,title:string,content:string}>("http://localhost:3000/api/post/" + id);
+        return this.http.get<{_id:string,title:string,content:string}>("http://localhost:3000/api/posts/" + id);
     }
 
     getPostTest(id:any){
@@ -102,9 +102,9 @@ export class PostsService{
             title:title,
             content:content
         };
-        //  http://localhost:3000/api/post/
+        //  http://localhost:3000/api/posts/
         //  http://localhost:82/mean-backend/public/api/posts/
-        this.http.put("http://localhost:3000/api/post/" + id, post)
+        this.http.put("http://localhost:3000/api/posts/" + id, post)
         .subscribe(response=>{
             const updatedPosts = {...this.posts};
             const oldPostIndex = updatedPosts.findIndex(p=>p.id === post.id);
