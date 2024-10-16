@@ -1,17 +1,13 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <mat-card *ngIf="!isLoading">
-    <form (submit)="onSearch(searchForm)" #searchForm="ngForm">
+    <form  [formGroup]="form" (submit)="onSearch()" #searchForm="ngForm">
         <mat-form-field>
             <input 
                 matInput rows="6"
-                name="title_search" 
-                ngModel
-                required
-                minlength="3"
-                #title_search="ngModel"
+                formControlName="title_search" 
                 placeholder=""
             />
-            <mat-error *ngIf="title_search.invalid">PLEASE ENTER A POST TITLE</mat-error>
+            <mat-error>PLEASE ENTER A POST TITLE</mat-error>
         </mat-form-field>
         <button 
             mat-raised-button

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core'
 import { Subscription } from 'rxjs';
 import {Post} from '../post.model';
 import { PostsService } from '../post.service';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup,Validators } from '@angular/forms';
 // DECORATOR
 @Component({
     selector: 'app-post-list',
@@ -18,9 +18,13 @@ export class PostListComponent implements OnInit, OnDestroy{
    posts: Post[] = [];
    private postsSub : Subscription;
    isLoading = false;
+   form: FormGroup;
    constructor(public postsService: PostsService) {}
-
+    
    ngOnInit(){
+        this.form = new FormGroup({
+            'title_search':new FormControl(null)
+        });
        this.postsService.getPosts();
        this.isLoading = true;
        this.postsSub = this.postsService.getPostUpdateListener()
@@ -38,7 +42,7 @@ export class PostListComponent implements OnInit, OnDestroy{
     this.postsService.deletePost(postId);
    }
 
-   onSearch(form:NgForm){
-    this.postsService.onSearch(form.value.title_search);
+   onSearch(){
+    this.postsService.onSearch(this.form.value.title_search);
    }
 }
