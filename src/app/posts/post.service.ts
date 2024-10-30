@@ -15,27 +15,13 @@ export class PostsService{
     constructor(private http: HttpClient,private router:Router){}
     
     getPosts(){
-        this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
-        .pipe(map((postData)=>{
-            return postData.posts.map(post=>{
-                return{
-                    title: post.title,
-                    content: post.content,
-                    id: post.id
-                };
-            });
-        }))
-        .subscribe((transformedPosts)=>{
-            this.posts = transformedPosts;
-            this.postsUpdated.next([...this.posts])
-        });
-        // this.http.get<{message: string, posts:any[]}>('http://localhost:3000/api/posts')
+        // this.http.get<{message: string, posts:any[]}>('http://localhost:82/mean-backend/public/api/posts')
         // .pipe(map((postData)=>{
         //     return postData.posts.map(post=>{
         //         return{
         //             title: post.title,
         //             content: post.content,
-        //             id: post._id
+        //             id: post.id
         //         };
         //     });
         // }))
@@ -43,6 +29,20 @@ export class PostsService{
         //     this.posts = transformedPosts;
         //     this.postsUpdated.next([...this.posts])
         // });
+        this.http.get<{message: string, posts:any[]}>('http://localhost:3000/api/posts')
+        .pipe(map((postData)=>{
+            return postData.posts.map(post=>{
+                return{
+                    title: post.title,
+                    content: post.content,
+                    id: post._id
+                };
+            });
+        }))
+        .subscribe((transformedPosts)=>{
+            this.posts = transformedPosts;
+            this.postsUpdated.next([...this.posts])
+        });
     }
      
     onSearch(title_search:string){
