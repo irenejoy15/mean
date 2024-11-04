@@ -16,6 +16,7 @@ export class PostEditComponent implements OnInit{
     data:any;
     form: FormGroup;
     isLoading:false;
+    imagePreview:string;
     constructor(public postsService: PostsService,public route: ActivatedRoute) {}
 
     ngOnInit(){
@@ -54,8 +55,11 @@ export class PostEditComponent implements OnInit{
         // SINGLE CONTROL
         this.form.patchValue({image:file});
         this.form.get('image').updateValueAndValidity();
-        console.log(file);
-        console.log(this.form);
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.imagePreview = reader.result as string;
+        };
+        reader.readAsDataURL(file);
     }
     onUpdate(){
         this.postsService.updatePost(this.postId,this.form.value.title,this.form.value.content);
