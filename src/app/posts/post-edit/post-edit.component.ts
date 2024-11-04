@@ -2,6 +2,7 @@ import {Component,OnInit} from '@angular/core'
 
 import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { PostsService } from '../post.service';
+import {mimeType} from '../post-create/mime-type.validator';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Post} from '../post.model';
 // DECORATOR
@@ -28,7 +29,8 @@ export class PostEditComponent implements OnInit{
                 validators:[Validators.required,Validators.minLength(3)]
             }),
             'image':new FormControl(null,{
-                validators:[Validators.required]
+                validators:[Validators.required],
+                asyncValidators: [mimeType]
             }),
         });
         this.route.paramMap.subscribe((paramMap:ParamMap)=>{
