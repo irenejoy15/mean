@@ -21,7 +21,8 @@ export class PostsService{
         //         return{
         //             title: post.title,
         //             content: post.content,
-        //             id: post.id
+        //             id: post.id,
+        //             imagePath : post.imagePath,
         //         };
         //     });
         // }))
