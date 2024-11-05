@@ -1,4 +1,5 @@
 // IMPORT HTTP
+// ng add @angular/material
 // npm install --save express
 // npm install --save-dev nodemon
 // npm run start:server
@@ -7,6 +8,7 @@
 // PjoqgjL563lZsaAd itbevmiprinter
 // https://www.mongodb.com/cloud/atlas
 // npm install mongoose --save
+// npm install multer --save
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");

@@ -82,16 +82,37 @@ export class PostsService{
         return this.postTest.asObservable();
     }
 
-    addPost(title:string, content:string){
+    // backup
+    // addPost(title:string, content:string){
+    //     // http://localhost:82/mean-backend/public/api/posts
+    //     // http://localhost:3000/api/posts
+    //     const post: Post = {id:null,title: title, content: content};
+    //     this.http
+    //     .post<{message: string, postId: string }>('http://localhost:3000/api/posts',post)
+    //     .subscribe((responseData)=>{
+    //         console.log(responseData.message);
+    //         const id = responseData.postId;
+    //         post.id = id;
+    //         this.posts.push(post)
+    //         this.postsUpdated.next([...this.posts]);
+    //         this.router.navigate(['/']);
+    //     });
+    // }
+
+    addPost(title:string, content:string,image:File){
         // http://localhost:82/mean-backend/public/api/posts
         // http://localhost:3000/api/posts
-        const post: Post = {id:null,title: title, content: content};
+        // const post: Post = {id:null,title: title, content: content};
+        
+        // FormData Combines Blob Data(image) and normal date
+        const postData = new FormData();
+        postData.append("title",title);
+        postData.append("content",content);
+        postData.append("image",image,title);
         this.http
-        .post<{message: string, postId: string }>('http://localhost:3000/api/posts',post)
+        .post<{message: string, postId: string }>('http://localhost:3000/api/posts',postData)
         .subscribe((responseData)=>{
-            console.log(responseData.message);
-            const id = responseData.postId;
-            post.id = id;
+            const post: Post = {id:responseData.postId,title:title,content};
             this.posts.push(post)
             this.postsUpdated.next([...this.posts]);
             this.router.navigate(['/']);
