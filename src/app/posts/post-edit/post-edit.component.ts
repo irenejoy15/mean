@@ -41,8 +41,8 @@ export class PostEditComponent implements OnInit{
                     this.isLoading = false;
                     this.data = postData;
                   
-                    // this.post = {id:postData.id,title:postData.title,content:postData.content}
-                    this.post = {id:this.data.id,title:this.data.title,content:this.data.content}
+                    // this.post = {id:postData.id,title:postData.title,content:postData.content,imagePath:this.data.imagePath}
+                    this.post = {id:this.data.id,title:this.data.title,content:this.data.content,imagePath:this.data.imagePath}
                     this.form.setValue(
                         {'title':this.post.title, 'content':this.post.content}
                     )
@@ -64,7 +64,7 @@ export class PostEditComponent implements OnInit{
         reader.readAsDataURL(file);
     }
     onUpdate(){
-        this.postsService.updatePost(this.postId,this.form.value.title,this.form.value.content);
+        this.postsService.updatePost(this.postId,this.form.value.title,this.form.value.content,this.form.value.imagePath);
         this.form.reset();
     }
 

@@ -33,9 +33,10 @@ export class PostsService{
         .pipe(map((postData)=>{
             return postData.posts.map(post=>{
                 return{
+                    id: post._id,
                     title: post.title,
                     content: post.content,
-                    id: post._id
+                    imagePath : post.imagePath
                 };
             });
         }))
@@ -50,6 +51,7 @@ export class PostsService{
         .pipe(map((postData)=>{
             return postData.posts.map(post=>{
                 return{
+                    imagePath : post.imagePath,
                     title: post.title,
                     content: post.content,
                     id: post.id
@@ -110,20 +112,25 @@ export class PostsService{
         postData.append("content",content);
         postData.append("image",image,title);
         this.http
-        .post<{message: string, postId: string }>('http://localhost:3000/api/posts',postData)
+        .post<{message: string, post: Post }>('http://localhost:3000/api/posts',postData)
         .subscribe((responseData)=>{
-            const post: Post = {id:responseData.postId,title:title,content};
+            const post: Post = {
+                id:responseData.post.id,
+                title:title,content,
+                imagePath:responseData.post.imagePath
+            };
             this.posts.push(post)
             this.postsUpdated.next([...this.posts]);
             this.router.navigate(['/']);
         });
     }
 
-    updatePost(id: string, title: string, content:string){
+    updatePost(id: string, title: string, content:string,imagePath:string){
         const post: Post = {
             id:id,
             title:title,
-            content:content
+            content:content,
+            imagePath:imagePath
         };
         //  http://localhost:3000/api/posts/
         //  http://localhost:82/mean-backend/public/api/posts/
