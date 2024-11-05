@@ -36,4 +36,6 @@
         </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>
+<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" aria-label="Select page">
+</mat-paginator>
 <p class="mat-body-1 info-text" *ngIf="posts.length <= 0">No POST ADDED YET!</p>

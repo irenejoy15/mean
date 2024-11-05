@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core'
 import { Subscription } from 'rxjs';
 import {Post} from '../post.model';
 import { PostsService } from '../post.service';
+import { PageEvent } from '@angular/material/paginator';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
 // DECORATOR
 @Component({
@@ -19,6 +20,10 @@ export class PostListComponent implements OnInit, OnDestroy{
    private postsSub : Subscription;
    isLoading = false;
    form: FormGroup;
+   totalPosts = 10 ;
+   postsPerPage = 2;
+   pageSizeOptions = [1,2,5,10];
+
    constructor(public postsService: PostsService) {}
     
    ngOnInit(){
@@ -32,6 +37,10 @@ export class PostListComponent implements OnInit, OnDestroy{
             this.isLoading = false;
             this.posts = posts;
         });
+   }
+
+   onChangedPage(pageData:PageEvent){
+    console.log(pageData);
    }
 
    ngOnDestroy() {

@@ -15,6 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { PostEditComponent } from './posts/post-edit/post-edit.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatToolbarModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
