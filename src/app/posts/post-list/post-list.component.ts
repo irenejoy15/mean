@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit, OnDestroy{
    private postsSub : Subscription;
    isLoading = false;
    form: FormGroup;
-   totalPosts = 10;
+   totalPosts = 0;
    postsPerPage = 2;
    currentPage = 1;
    pageSizeOptions = [1,2,5,10];
@@ -31,16 +31,18 @@ export class PostListComponent implements OnInit, OnDestroy{
         this.form = new FormGroup({
             'title_search':new FormControl(null)
         });
-       this.postsService.getPosts(this.postsPerPage,this.currentPage);
-       this.isLoading = true;
-       this.postsSub = this.postsService.getPostUpdateListener()
-        .subscribe((posts: Post[])=>{
-            this.isLoading = false;
-            this.posts = posts;
-        });
+        this.postsService.getPosts(this.postsPerPage,this.currentPage);
+        this.isLoading = true;
+        this.postsSub = this.postsService.getPostUpdateListener()
+            .subscribe((postsdata: {posts:Post[],postCount:number})=>{
+                this.isLoading = false;
+                this.posts = postsdata.posts;
+                this.totalPosts = postsdata.postCount;
+            });
    }
 
    onChangedPage(pageData:PageEvent){
+    this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.postsService.getPosts(this.postsPerPage,this.currentPage);
@@ -51,7 +53,10 @@ export class PostListComponent implements OnInit, OnDestroy{
    }
 
    onDelete(postId:string){
-    this.postsService.deletePost(postId);
+    this.isLoading = true;
+    this.postsService.deletePost(postId).subscribe(()=>{
+        this.postsService.getPosts(this.postsPerPage,this.currentPage)
+    });
    }
 
    onSearch(){
