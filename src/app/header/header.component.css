@@ -15,3 +15,7 @@ mat-card { padding: 30px; }
 app-header a { color: white !important }
 a.mat-accent { color: #ff4081 !important }
 .mat-mdc-text-field-wrapper { background-color: transparent !important }
+
+ul{
+    display: flex;
+}
