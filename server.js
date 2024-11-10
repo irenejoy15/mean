@@ -9,6 +9,7 @@
 // https://www.mongodb.com/cloud/atlas
 // npm install mongoose --save
 // npm install multer --save
+// npm install --save mongoose-unique-validator --legacy-peer-deps
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");

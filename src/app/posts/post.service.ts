@@ -17,32 +17,14 @@ export class PostsService{
     
     getPosts(postsPerPage:number, currentPage: number){
         const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-        this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend/public/api/posts'+queryParams)
-        .pipe(map((postData)=>{
-            
-            return{
-                posts:postData.posts.map(post=>
-                {
-                    return{
-                        id: post.id,
-                        title: post.title,
-                        content: post.content,
-                        imagePath : post.imagePath
-                    };
-                }), maxPosts:postData.maxPosts};
-            }))
-        .subscribe((transformedPostsData)=>{
-            console.log(transformedPostsData);
-            this.posts = transformedPostsData.posts;
-            this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
-        });
-        // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:3000/api/posts'+queryParams)
+        // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend/public/api/posts'+queryParams)
         // .pipe(map((postData)=>{
+            
         //     return{
         //         posts:postData.posts.map(post=>
         //         {
         //             return{
-        //                 id: post._id,
+        //                 id: post.id,
         //                 title: post.title,
         //                 content: post.content,
         //                 imagePath : post.imagePath
@@ -50,9 +32,27 @@ export class PostsService{
         //         }), maxPosts:postData.maxPosts};
         //     }))
         // .subscribe((transformedPostsData)=>{
+        //     console.log(transformedPostsData);
         //     this.posts = transformedPostsData.posts;
         //     this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
         // });
+        this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:3000/api/posts'+queryParams)
+        .pipe(map((postData)=>{
+            return{
+                posts:postData.posts.map(post=>
+                {
+                    return{
+                        id: post._id,
+                        title: post.title,
+                        content: post.content,
+                        imagePath : post.imagePath
+                    };
+                }), maxPosts:postData.maxPosts};
+            }))
+        .subscribe((transformedPostsData)=>{
+            this.posts = transformedPostsData.posts;
+            this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
+        });
     }
      
     onSearch(title_search:string){
