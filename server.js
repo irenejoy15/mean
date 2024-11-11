@@ -10,6 +10,7 @@
 // npm install mongoose --save
 // npm install multer --save
 // npm install --save mongoose-unique-validator --legacy-peer-deps
+// npm install --save jsonwebtoken
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
