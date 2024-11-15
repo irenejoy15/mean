@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import {Post} from './post.model'
 import {map} from 'rxjs/operators'
@@ -16,8 +16,9 @@ export class PostsService{
     constructor(private http: HttpClient,private router:Router){}
     
     getPosts(postsPerPage:number, currentPage: number){
+        const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
         const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-        // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend/public/api/posts'+queryParams)
+        // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend/public/api/posts'+queryParams, {headers: headers})
         // .pipe(map((postData)=>{
             
         //     return{
@@ -124,7 +125,7 @@ export class PostsService{
         postData.append("content",content);
         postData.append("image",image,title);
         this.http
-        .post<{message: string, post: Post}>('http://localhost:3000/api/posts',postData)
+        .post<{message: string, post: Post}>('http://localhost:82/mean-backend1/public/api/posts',postData)
         .subscribe((responseData)=>{
             // const post: Post = {
             //     id:responseData.post.id,

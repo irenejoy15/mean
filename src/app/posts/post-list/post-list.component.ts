@@ -4,6 +4,7 @@ import {Post} from '../post.model';
 import { PostsService } from '../post.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
+import axios from 'axios';
 // DECORATOR
 @Component({
     selector: 'app-post-list',
@@ -39,6 +40,13 @@ export class PostListComponent implements OnInit, OnDestroy{
                 this.posts = postsdata.posts;
                 this.totalPosts = postsdata.postCount;
             });
+
+            // const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
+            //     axios.get('http://localhost:82/mean-backend/public/api/user',{headers}).then(response=>{
+            //         console.log(response);
+            //     })
+            
+    
    }
 
    onChangedPage(pageData:PageEvent){
