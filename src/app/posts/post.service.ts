@@ -16,7 +16,7 @@ export class PostsService{
     constructor(private http: HttpClient,private router:Router){}
     
     getPosts(postsPerPage:number, currentPage: number){
-        const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
+        // const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
         const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
         // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend/public/api/posts'+queryParams, {headers: headers})
         // .pipe(map((postData)=>{

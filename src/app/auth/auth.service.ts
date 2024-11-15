@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Subject } from "rxjs";
 @Injectable({providedIn:"root"})
 export class AuthService{
+    private isAuthenticated = false;
     private token:string;
     private authStatusListener = new Subject<boolean>();
     constructor(private http:HttpClient){}
@@ -14,7 +15,11 @@ export class AuthService{
         return this.token;
     }
 
-    getAuthStatusListener(){
+    getIsAuth() {
+        return this.isAuthenticated;
+    }
+
+    getAuthStatusListener() {
         return this.authStatusListener.asObservable();
     }
 
@@ -28,31 +33,54 @@ export class AuthService{
             });
     }
 
-    login(email:string,password:string){
-        //http://localhost:82/mean-backend/public/api/login"
-        // http://localhost:3000/api/user/login
-        // / http://localhost:82/mean-backend/public/api/logout
-        const authData : AuthData = {email:email,password:password}
+    // login(email:string,password:string){
+    //     //http://localhost:82/mean-backend/public/api/login"
+    //     // http://localhost:3000/api/user/login
+    //     // / http://localhost:82/mean-backend/public/api/logout
+    //     const authData : AuthData = {email:email,password:password}
 
-        // axios.defaults.withCredentials = true;
-        // axios.defaults.withXSRFToken = true;
-        // const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-        const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
-        // // axios.get('http://localhost:82/mean-backend/public/sanctum/csrf-cookie',{headers}).then(response=>{
-        //     this.http.post<{token:string}>("http://localhost:82/mean-backend/public/api/login",authData,{headers})
-        //     .subscribe(response=>{
-        //         const token = response.token;
-        //         this.token = token;
-        //          this.authStatusListener.next(true);
-        //         console.log(response)
-        //     });
-        // // });
+    //     // axios.defaults.withCredentials = true;
+    //     // axios.defaults.withXSRFToken = true;
+    //     // const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+    //     const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
+    //     // // axios.get('http://localhost:82/mean-backend/public/sanctum/csrf-cookie',{headers}).then(response=>{
+    //     //     this.http.post<{token:string}>("http://localhost:82/mean-backend/public/api/login",authData,{headers})
+    //     //     .subscribe(response=>{
+    //     //         const token = response.token;
+    //     //         this.token = token;
+    //     //          if(token){
+    //         //     this.isAuthenticated = true;
+    //         //     this.authStatusListener.next(true);
+    //         // }
+    //     //     });
+    //     // // });
 
-        this.http.post<{token:string}>("http://localhost:3000/api/user/login",authData)
-        .subscribe(response=>{
+    //     this.http.post<{token:string}>("http://localhost:3000/api/user/login",authData)
+    //     .subscribe(response=>{
+    //         const token = response.token;
+    //         this.token = token;
+    //         if(token){
+    //             this.isAuthenticated = true;
+    //             this.authStatusListener.next(true);
+    //         }
+    //     });
+    // }
+
+    login(email: string, password: string) {
+        const authData: AuthData = { email: email, password: password };
+        this.http
+          .post<{ token: string; expiresIn: number }>(
+            "http://localhost:3000/api/user/login",
+            authData
+          )
+          .subscribe(response => {
             const token = response.token;
             this.token = token;
-            this.authStatusListener.next(true);
-        });
-    }
+            console.log(this.token);
+            if (token) {
+              this.isAuthenticated = true;
+              this.authStatusListener.next(true);
+            }
+          });
+      }
 }
