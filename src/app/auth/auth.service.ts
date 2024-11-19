@@ -43,9 +43,8 @@ export class AuthService{
 
         // axios.defaults.withCredentials = true;
         // axios.defaults.withXSRFToken = true;
-        // const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
         // const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
-        // axios.get('http://localhost:82/mean-backend/public/sanctum/csrf-cookie',{headers}).then(response=>{
+        // axios.get('http://localhost:82/mean-backend1/public/sanctum/csrf-cookie',{headers}).then(response=>{
         //     this.http.post<{token:string,expiresIn:number}>("http://localhost:82/mean-backend1/public/api/login",authData,{headers})
         //     .subscribe(response=>{
         //         const token = response.token;

@@ -28,7 +28,8 @@ export class PostsService{
         //                 id: post.id,
         //                 title: post.title,
         //                 content: post.content,
-        //                 imagePath : post.imagePath
+        //                 imagePath : post.imagePath,
+        //                 creator:post.creator
         //             };
         //         }), maxPosts:postData.maxPosts};
         //     }))
@@ -46,18 +47,20 @@ export class PostsService{
                         id: post._id,
                         title: post.title,
                         content: post.content,
-                        imagePath : post.imagePath
+                        imagePath : post.imagePath,
+                        creator:post.creator
                     };
                 }), maxPosts:postData.maxPosts};
             }))
         .subscribe((transformedPostsData)=>{
+            console.log(transformedPostsData);
             this.posts = transformedPostsData.posts;
             this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
         });
     }
      
     onSearch(title_search:string){
-        this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend/public/api/posts/search?title='+title_search)
+        this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend1/public/api/posts/search?title='+title_search)
         .pipe(map((postData)=>{
             return{
                 posts:postData.posts.map(post=>
@@ -115,7 +118,7 @@ export class PostsService{
     // }
 
     addPost(title:string, content:string,image:File){
-        // http://localhost:82/mean-backend/public/api/posts
+        // http://localhost:82/mean-backend1/public/api/posts
         // http://localhost:3000/api/posts
         // const post: Post = {id:null,title: title, content: content};
         
@@ -125,7 +128,7 @@ export class PostsService{
         postData.append("content",content);
         postData.append("image",image,title);
         this.http
-        .post<{message: string, post: Post}>('http://localhost:82/mean-backend1/public/api/posts',postData)
+        .post<{message: string, post: Post}>('http://localhost:3000/api/posts',postData)
         .subscribe((responseData)=>{
             // const post: Post = {
             //     id:responseData.post.id,
