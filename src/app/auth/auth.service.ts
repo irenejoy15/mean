@@ -44,24 +44,26 @@ export class AuthService{
         // axios.defaults.withCredentials = true;
         // axios.defaults.withXSRFToken = true;
         // const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-        const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
-        // // axios.get('http://localhost:82/mean-backend/public/sanctum/csrf-cookie',{headers}).then(response=>{
-        //     this.http.post<{token:string}>("http://localhost:82/mean-backend/public/api/login",authData,{headers})
+        // const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
+        // axios.get('http://localhost:82/mean-backend/public/sanctum/csrf-cookie',{headers}).then(response=>{
+        //     this.http.post<{token:string,expiresIn:number}>("http://localhost:82/mean-backend1/public/api/login",authData,{headers})
         //     .subscribe(response=>{
         //         const token = response.token;
         //         this.token = token;
-        //         if(token){
-            //     const expiresInDuration =response.expiresIn;
-            //     this.isAuthenticated = true;
-            //     this.authStatusListener.next(true);
-            //     const now = new Date();
-            //     const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-            //     console.log(expirationDate);
-            //     this.saveAuthData(token, expirationDate);
-            //     this.router.navigate(['/']);
-            // }
+        //     if(token){
+        //         const expiresInDuration =response.expiresIn;
+        //         this.setAuthTimer(expiresInDuration);
+        //         this.isAuthenticated = true;
+        //         this.authStatusListener.next(true);
+        //         const now = new Date();
+        //         const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+        //         console.log(expirationDate);
+        //         this.saveAuthData(token, expirationDate);
+        //         this.router.navigate(['/']);
+            
+        //     }
         //     });
-        // // });
+        // });
 
         this.http.post<{token:string,expiresIn:number}>("http://localhost:3000/api/user/login",authData)
         .subscribe(response=>{
