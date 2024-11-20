@@ -45,7 +45,8 @@ export class PostEditComponent implements OnInit{
                         id:this.data.id,
                         title:this.data.title,
                         content:this.data.content,
-                        imagePath:this.data.imagePath
+                        imagePath:this.data.imagePath,
+                        creator:this.data.creator
                     }
                     console.log(this.post.imagePath);
                     this.form.setValue({

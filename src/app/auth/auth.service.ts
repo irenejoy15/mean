@@ -31,10 +31,10 @@ export class AuthService{
     }
 
     createUser(email:string,password:string){
-        //http://localhost:82/mean-backend/public/api/signup"
+        //http://localhost:82/mean-backend1/public/api/signup"
         //http://localhost:3000/api/user/signup
         const authData : AuthData = {email:email,password:password}
-        this.http.post("http://localhost:3000/api/user/signup",authData)
+        this.http.post("http://localhost:82/mean-backend1/public/api/signup",authData)
             .subscribe(response=>{
                 console.log(response);
             });
@@ -46,47 +46,47 @@ export class AuthService{
         // / http://localhost:82/mean-backend/public/api/logout
         const authData : AuthData = {email:email,password:password}
 
-        // axios.defaults.withCredentials = true;
-        // axios.defaults.withXSRFToken = true;
-        // const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
-        // axios.get('http://localhost:82/mean-backend1/public/sanctum/csrf-cookie',{headers}).then(response=>{
-        //     this.http.post<{token:string,expiresIn:number},userId:string>("http://localhost:82/mean-backend1/public/api/login",authData,{headers})
-        //     .subscribe(response=>{
-        //         const token = response.token;
-        //         this.token = token;
-        //     if(token){
-        //         const expiresInDuration =response.expiresIn;
-        //         this.setAuthTimer(expiresInDuration);
-        //         this.isAuthenticated = true;
-        //         this.authStatusListener.next(true);
-        //          this.userId = response.userId;
-        //         const now = new Date();
-        //         const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-        //         console.log(expirationDate);
-        //         this.saveAuthData(token, expirationDate,this.userId);
-        //         this.router.navigate(['/']);
-            
-        //     }
-        //     });
-        // });
-
-        this.http.post<{token:string,expiresIn:number,userId:string}>("http://localhost:3000/api/user/login",authData)
-        .subscribe(response=>{
-            const token = response.token;
-            this.token = token;
+        axios.defaults.withCredentials = true;
+        axios.defaults.withXSRFToken = true;
+        const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
+        axios.get('http://localhost:82/mean-backend1/public/sanctum/csrf-cookie',{headers}).then(response=>{
+            this.http.post<{token:string,expiresIn:number,userId:string}>("http://localhost:82/mean-backend1/public/api/login",authData,{headers})
+            .subscribe(response=>{
+                const token = response.token;
+                this.token = token;
             if(token){
                 const expiresInDuration =response.expiresIn;
                 this.setAuthTimer(expiresInDuration);
                 this.isAuthenticated = true;
                 this.authStatusListener.next(true);
-                this.userId = response.userId;
+                 this.userId = response.userId;
                 const now = new Date();
                 const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
                 console.log(expirationDate);
                 this.saveAuthData(token, expirationDate,this.userId);
                 this.router.navigate(['/']);
+            
             }
+            });
         });
+
+        // this.http.post<{token:string,expiresIn:number,userId:string}>("http://localhost:3000/api/user/login",authData)
+        // .subscribe(response=>{
+        //     const token = response.token;
+        //     this.token = token;
+        //     if(token){
+        //         const expiresInDuration =response.expiresIn;
+        //         this.setAuthTimer(expiresInDuration);
+        //         this.isAuthenticated = true;
+        //         this.authStatusListener.next(true);
+        //         this.userId = response.userId;
+        //         const now = new Date();
+        //         const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+        //         console.log(expirationDate);
+        //         this.saveAuthData(token, expirationDate,this.userId);
+        //         this.router.navigate(['/']);
+        //     }
+        // });
     }
 
     autoAuthUser() {

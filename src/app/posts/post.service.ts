@@ -18,33 +18,14 @@ export class PostsService{
     getPosts(postsPerPage:number, currentPage: number){
         const headers = { 'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
         const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-        // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend1/public/api/posts'+queryParams, {headers: headers})
-        // .pipe(map((postData)=>{
-            
-        //     return{
-        //         posts:postData.posts.map(post=>
-        //         {
-        //             return{
-        //                 id: post.id,
-        //                 title: post.title,
-        //                 content: post.content,
-        //                 imagePath : post.imagePath,
-        //                 creator:post.creator
-        //             };
-        //         }), maxPosts:postData.maxPosts};
-        //     }))
-        // .subscribe((transformedPostsData)=>{
-        //     console.log(transformedPostsData);
-        //     this.posts = transformedPostsData.posts;
-        //     this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
-        // });
-        this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:3000/api/posts'+queryParams)
+        this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:82/mean-backend1/public/api/posts'+queryParams, {headers: headers})
         .pipe(map((postData)=>{
+            
             return{
                 posts:postData.posts.map(post=>
                 {
                     return{
-                        id: post._id,
+                        id: post.id,
                         title: post.title,
                         content: post.content,
                         imagePath : post.imagePath,
@@ -57,6 +38,25 @@ export class PostsService{
             this.posts = transformedPostsData.posts;
             this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
         });
+        // this.http.get<{message: string, posts:any[],maxPosts:number}>('http://localhost:3000/api/posts'+queryParams)
+        // .pipe(map((postData)=>{
+        //     return{
+        //         posts:postData.posts.map(post=>
+        //         {
+        //             return{
+        //                 id: post._id,
+        //                 title: post.title,
+        //                 content: post.content,
+        //                 imagePath : post.imagePath,
+        //                 creator:post.creator
+        //             };
+        //         }), maxPosts:postData.maxPosts};
+        //     }))
+        // .subscribe((transformedPostsData)=>{
+        //     console.log(transformedPostsData);
+        //     this.posts = transformedPostsData.posts;
+        //     this.postsUpdated.next({posts:[...this.posts],postCount:transformedPostsData.maxPosts})
+        // });
     }
      
     onSearch(title_search:string){
@@ -69,7 +69,8 @@ export class PostsService{
                         id: post.id,
                         title: post.title,
                         content: post.content,
-                        imagePath : post.imagePath
+                        imagePath : post.imagePath,
+                        creator: post.creator
                     };
                 }), maxPosts:postData.maxPosts};
             }))
@@ -85,14 +86,14 @@ export class PostsService{
     }
 
     getPost(id:any){
-        // http://localhost:82/mean-backend/public/api/posts/edittest/
+        // http://localhost:82/mean-backend1/public/api/posts/edittest/
         // http://localhost:3000/api/posts/
         // return this.http.get<{id:string,title:string,content:string,imagePath:string}>("http://localhost:82/mean-backend/public/api/posts/edittest/" + id);
-        return this.http.get<{_id:string,title:string,content:string,imagePath:string}>("http://localhost:3000/api/posts/" + id);
+        return this.http.get<{_id:string,title:string,content:string,imagePath:string,creator:string}>("http://localhost:3000/api/posts/" + id);
     }
 
     getPostTest(id:any){
-        return this.http.get("http://localhost:82/mean-backend/public/api/posts/edittest/"+id);
+        return this.http.get("http://localhost:82/mean-backend1/public/api/posts/edittest/"+id);
         
     }
 
@@ -128,7 +129,7 @@ export class PostsService{
         postData.append("content",content);
         postData.append("image",image,title);
         this.http
-        .post<{message: string, post: Post}>('http://localhost:3000/api/posts',postData)
+        .post<{message: string, post: Post}>('http://localhost:82/mean-backend1/public/api/posts',postData)
         .subscribe((responseData)=>{
             // const post: Post = {
             //     id:responseData.post.id,
@@ -154,7 +155,8 @@ export class PostsService{
             id: id,
             title: title,
             content: content,
-            imagePath: image
+            imagePath: image,
+            creator: null
           };
         }
            //  http://localhost:3000/api/posts/
