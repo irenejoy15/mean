@@ -54,14 +54,15 @@ router.post("/login", (req, res, next) => {
       res.status(200).json({
         token: token,
         expiresIn: 3600,
-        userId:fetchedUser._id
+        userId: fetchedUser._id
       });
     })
     .catch(err => {
       return res.status(401).json({
-        message: "Auth failed"
+        message: "Invalid authentication credentials!"
       });
     });
 });
+
 
 module.exports = router;
