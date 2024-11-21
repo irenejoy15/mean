@@ -33,9 +33,10 @@ router.post("/login", (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
+        let err = 'ERROR MANINIWALA';
         return res.status(401).json({
-          message: "Auth failed"
-        });
+          message: err.toString()
+        })
       }
       fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
@@ -59,7 +60,7 @@ router.post("/login", (req, res, next) => {
     })
     .catch(err => {
       return res.status(401).json({
-        message: "Invalid authentication credentials!"
+        message:err.toString()
       });
     });
 });
