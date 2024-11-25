@@ -41,7 +41,7 @@ exports.updatePost =  (req, res, next) => {
     });
     Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
       .then(result => {
-       
+        console.log(result);
         if (result.acknowledged == true) {
           res.status(200).json({ message: "Update successful!" });
         } else {
