@@ -15,7 +15,7 @@ import { ErrorInterceptor } from './error.interceptor';
 import { ErrorComponent } from './error/error.component';
 import { AngularMaterialModule } from 'src/angular.module';
 import { PostModule } from './posts/post.module';
-import { AuthModule } from './auth/auth.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,6 @@ import { AuthModule } from './auth/auth.module';
     HttpClientModule,
     AngularMaterialModule,
     PostModule,
-    AuthModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor, multi:true},
