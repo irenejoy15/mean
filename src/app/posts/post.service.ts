@@ -162,7 +162,7 @@ export class PostsService{
            //  http://localhost:3000/api/posts/
         //  http://localhost:82/mean-backend/public/api/posts/
         this.http
-            .post("http://localhost:3000/api/posts/" + id, postData)
+            .put("http://localhost:3000/api/posts/" + id, postData)
             .subscribe(response => {
                 // const updatedPosts = [...this.posts];
                 // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
